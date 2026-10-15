@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+  --primary: #171717;
+  --primary-foreground: #fafafa;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #0a0a0a;
+  --radius: 0.5rem;
+  --chart-1: #e76e50;
+  --chart-2: #2a9d8f;
+  --chart-3: #264653;
+  --chart-4: #f4a261;
+  --chart-5: #e9c46a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --card: #0a0a0a;
+    --card-foreground: #ededed;
+    --popover: #0a0a0a;
+    --popover-foreground: #ededed;
+    --primary: #ededed;
+    --primary-foreground: #171717;
+    --secondary: #262626;
+    --secondary-foreground: #ededed;
+    --muted: #262626;
+    --muted-foreground: #a3a3a3;
+    --accent: #262626;
+    --accent-foreground: #ededed;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #ededed;
+    --border: #262626;
+    --input: #262626;
+    --ring: #d4d4d4;
+    --chart-1: #424242;
+    --chart-2: #616161;
+    --chart-3: #757575;
+    --chart-4: #9e9e9e;
+    --chart-5: #bdbdbd;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Book Now button special effects */
+.book-now-btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform .22s cubic-bezier(.2,.9,.2,1), box-shadow .22s;
+  background-color: white;
+  color: black;
+  border-radius: 9999px; /* Full pill shape */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  height: 3.5rem;
+}
+
+/* subtle lift and shadow on hover/focus */
+.book-now-btn:focus,
+.book-now-btn:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15), 0 2px 8px rgba(255, 255, 255, 0.1);
+  background-color: white; /* Ensure it stays white */
+}
+
+/* animated gradient sweep */
+.book-now-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.12) 10%, rgba(0,0,0,0.02) 30%, rgba(0,0,0,0) 100%);
+  transform: translateX(-110%) skewX(-10deg);
+  transition: transform 600ms cubic-bezier(.2,.9,.2,1), opacity 300ms;
+  opacity: 0;
+  mix-blend-mode: overlay;
+}
+
+/* reveal sweep on hover (also keyboard focus-visible) */
+.book-now-btn:hover::before,
+.book-now-btn:focus::before,
+.book-now-btn:focus-visible::before {
+  transform: translateX(110%) skewX(-10deg);
+  opacity: 1;
+}
+
+/* pulsing glow ring for accessible focus */
+.book-now-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3), 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* micro-interaction for the arrow icon */
+.book-now-btn .icon {
+  display: inline-flex;
+  transform: translateX(0);
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1);
+}
+
+.book-now-btn:hover .icon {
+    transform: translateX(4px);
+}
+
+/* smoother behavior for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  .book-now-btn,
+  .book-now-btn::before,
+  .book-now-btn .icon {
+    transition: none !important;
+  }
+}
