@@ -73,7 +73,7 @@ resource "aws_iam_instance_profile" "profile" {
 
 resource "aws_instance" "app" {
   ami                  = data.aws_ami.ubuntu.id
-  instance_type        = var.instance_type
+  instance_type        = t3.micro
   subnet_id            = var.subnet_id
   vpc_security_group_ids = [aws_security_group.app_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.profile.name
