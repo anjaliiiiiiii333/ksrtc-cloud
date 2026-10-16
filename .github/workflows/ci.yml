@@ -55,7 +55,7 @@ jobs:
 
       # Step 8: Scan the locally built image
       - name: Run Trivy Scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.36.0
         with:
           image-ref: ${{ steps.login-ecr.outputs.registry }}/ksrtc-app:${{ github.sha }}
           format: 'table'
