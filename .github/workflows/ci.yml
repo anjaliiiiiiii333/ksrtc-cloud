@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: ap-south-1
-  ECR_REPOSITORY: ksrtc-app
+  ECR_REPOSITORY: ksrtc
 
 jobs:
   build-test-scan-push:
