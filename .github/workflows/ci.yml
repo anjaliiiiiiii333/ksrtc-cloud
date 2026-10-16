@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: ap-south-1
-  ECR_REPOSITORY: ksrtc
+  ECR_REPOSITORY: ksrtc-app
 
 jobs:
   build-test-scan-push:
@@ -53,23 +53,19 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
 
-      # Step 8: Run Trivy Vulnerability Scanner directly on the image tag
+      # Step 8: Scan the locally built image
       - name: Run Trivy Scanner
-        uses: aquasecurity/trivy-action@master
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
+        uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: ${{ env.ECR_REGISTRY }}/ksrtc-app:${{ env.IMAGE_TAG }}
+          image-ref: ${{ steps.login-ecr.outputs.registry }}/ksrtc-app:${{ github.sha }}
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
-      # Step 9: Push Image to ECR (only runs if Trivy scan passes)
+      # Step 9: Push image to ECR
       - name: Push Image to ECR
-        if: success()
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
